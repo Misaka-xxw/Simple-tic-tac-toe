@@ -23,6 +23,11 @@ def get_css(filename):
     CSS_PATH = "./view/css"
     return send_from_directory(CSS_PATH, filename)
 
+@app.route('/css/fonts/<filename>', methods=['GET'])
+def get_fonts(filename):
+    print(filename)
+    CSS_PATH = "./view/css/fonts"
+    return send_from_directory(CSS_PATH, filename)
 
 # redirect
 @app.route('/', methods=['GET'])

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>三子棋游戏</title>
+    <link rel="stylesheet" href="http://127.0.0.1:5000/css/element-ui.css">
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+
+            /* background-repeat: no-repeat; */
+            background-image: linear-gradient(180deg, #cfcfcf 0%, #ffffff 100%);
+            background-size: 100% 100%;
+            background-position: center;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .carousel-container {
+            width: 100%;
+            margin: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 80px;
+            /* color: #333; */
+            color: black;
+            margin: 40px;
+            /*text-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);*/
+        }
+
+        h3 {
+            text-align: center;
+            color: grey;
+            /*text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);*/
+        }
+
+        .button_area {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .custom-button {
+            margin: 40px;
+            padding: 30px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+
+<body>
+<div id="app">
+    <div class="carousel-container">
+        <transition name="el-zoom-in-bottom">
+            <div v-show="show_title">
+                <h1>三子棋游戏</h1>
+            </div>
+        </transition>
+        <transition name="el-zoom-in-bottom">
+            <div v-show="show_subtitle">
+                <h3>又称三子棋，和电脑或者人类对战👊</h3>
+            </div>
+        </transition>
+        <transition name="el-zoom-in-bottom">
+            <div class="button_area" v-show="show_button">
+                <el-radio v-model="radio" label="1">人机对战</el-radio>
+                <el-radio v-model="radio" label="2">双人模式</el-radio>
+                <el-radio v-model="radio" label="3">摆烂观战</el-radio>
+            </div>
+        </transition>
+        <transition name="el-zoom-in-bottom">
+            <div class="button_area" v-show="show_button">
+                <el-button type="info" class="custom-button" @click="play_page()">开始游戏</el-button>
+            </div>
+        </transition>
+    </div>
+
+</div>
+<script src="http://127.0.0.1:5000/css/vue.js"></script>
+<script src="http://127.0.0.1:5000/css/index.js"></script>
+<script src="http://127.0.0.1:5000/css/my_func.js"></script>
+<script>
+    new Vue({
+            el: '#app',
+            data() {
+                return {
+                    show_title: false,
+                    show_subtitle: false,
+                    show_button: false,
+                    radio: '1'
+                };
+            },
+            mounted() {
+                setTimeout(() => {
+                    this.show_title = true;
+                }, 500);
+                setTimeout(() => {
+                    this.show_subtitle = true;
+                }, 750);
+                setTimeout(() => {
+                    this.show_button = true;
+                }, 1000);
+
+            },
+            methods: {
+                play_page() {
+                    this.$confirm('谁来当先手？', '提示', {
+                      confirmButtonText: '您',
+                      cancelButtonText: '机器',
+                      // type: 'warning'
+                    }).then(() => {
+                      this.$message({
+                        type: 'success',
+                        message: '开始游戏!'
+                      });
+                      window.location.href = 'play.html';
+                    }).catch(() => {
+                      this.$message({
+                        type: 'success',
+                        message: '开始游戏！'
+                      });
+                      window.location.href = 'play.html';
+                    });
+
+                },
+            }
+        }
+    );
+</script>
+</body>
+
+</html>
