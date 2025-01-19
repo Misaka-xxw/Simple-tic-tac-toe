@@ -1,11 +1,12 @@
-inf=2**15 # 模拟无穷大
+inf = 2 ** 15  # 模拟无穷大
+
 
 class Algorithm:
     def __init__(self):
         self.board = [[0 for _ in range(3)] for _ in range(3)]
-        self.best_move=(0,0)
-        self.game_over=False
-        self.winner=None
+        self.best_move = (0, 0)
+        self.game_over = False
+        self.winner = None
 
     def judge(self) -> int:
         """
@@ -27,7 +28,7 @@ class Algorithm:
                     return -1  # 游戏未结束
         return 0  # 平局
 
-    def minmax(self, player: int,a=-inf, b=inf) -> int:
+    def minmax(self, player: int, a=-inf, b=inf) -> int:
         """
         Minimax 算法，1 为 Max，2 为 Min
         :param player: 哪个玩家
@@ -39,21 +40,22 @@ class Algorithm:
         e = self.judge()
         if e != -1:
             return -1 if e == 2 else e
-        best_move=(1,1)
-        (best_score, cmp, update_bound) = (-inf, lambda x, y: x > y, lambda x, y: max(x, y)) if player == 1 else (inf, lambda x, y: x < y, lambda x, y: min(x, y))
+        best_move = (1, 1)
+        (best_score, cmp, update_bound) = (-inf, lambda x, y: x > y, lambda x, y: max(x, y)) if player == 1 else (
+        inf, lambda x, y: x < y, lambda x, y: min(x, y))
         for i in range(3):
             for j in range(3):
-                if self.board[i][j] == 0: # 为空，落子
-                    self.board[i][j] = player # 落子
-                    current_score = self.minmax(3 - player, a, b) # 下一步最好的一子
+                if self.board[i][j] == 0:  # 为空，落子
+                    self.board[i][j] = player  # 落子
+                    current_score = self.minmax(3 - player, a, b)  # 下一步最好的一子
                     if cmp(current_score, best_score):
                         best_score = current_score
                         best_move = (i, j)
-                    self.board[i][j] = 0 # 落子
+                    self.board[i][j] = 0  # 落子
                     a = update_bound(a, best_score)
                     if b <= a:
                         break
-        self.best_move=best_move
+        self.best_move = best_move
         return best_score
 
     def play_step(self, player: int, auto: bool = True, x: int = 0, y: int = 0):
@@ -66,8 +68,14 @@ class Algorithm:
         """
         if auto:
             self.minmax(player)
-            x,y = self.best_move
+            x, y = self.best_move
         self.board[x][y] = player
         if self.judge() == player:
             self.game_over = True
             self.winner = player
+
+    def clear_board(self):
+        self.board = [[0 for _ in range(3)] for _ in range(3)]
+        self.best_move = (0, 0)
+        self.game_over = False
+        self.winner = None
