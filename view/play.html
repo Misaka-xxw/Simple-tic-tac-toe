@@ -58,8 +58,8 @@
             background-color: #a0a0a0;
         }
 
-        .cell:disabled{
-            color:black;
+        .cell:disabled {
+            color: black;
             opacity: 1;
             fill-opacity: 1;
         }
@@ -105,12 +105,30 @@
             };
         },
         methods: {
-            play_step(index) {
+            async play_step(index) {
                 if (this.cells[index] !== 0) {
                     return;
                 }
                 this.cells[index] = this.round_player;
                 this.round_player = 3 - this.round_player;
+                await this.drop(index, 3 - this.round_player);
+            },
+            // 下棋信息投到flask
+            async drop(index, player) {
+                try {
+                    const response = await fetch('http://127.0.0.1:5000/apis/v1/get-musics-info', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify() //lasy to think😫
+                    });
+                    const data = await response.json();
+                    console.log('chess data:', data);
+                    return data;
+                } catch (error) {
+                    console.error('Error:', error);
+                }
             }
         }
     });
