@@ -7,7 +7,7 @@ app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 app.config['SESSION_TYPE'] = 'filesystem'
 CORS(app)
-
+client_ip=None
 
 # static resources
 @app.route('/static/<filename>', methods=['GET'])
@@ -32,6 +32,7 @@ def get_fonts(filename):
 # redirect
 @app.route('/', methods=['GET'])
 def redirect2index():
+    client_ip = request.remote_addr
     return redirect('/index.html')
 
 @app.before_request
@@ -41,6 +42,7 @@ def redirect_before_request():
 
 @app.route('/<filename>', methods=['GET'])
 def get_pages(filename):
+    global client_ip
     print(filename)
     return send_from_directory('./view', filename)
 
