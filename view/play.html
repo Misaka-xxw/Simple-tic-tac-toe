@@ -80,7 +80,8 @@
         轮到<span>{{content_text[round_player]}}</span>下棋
     </h3>
     <div class="chessboard">
-        <button v-for="(cell, index) in cells" :key="index" class="cell" @click="play_step(index)":which_player="content_text[round_player]">
+        <button v-for="(cell, index) in cells" :key="index" class="cell" @click="play_step(index)"
+                :which_player="content_text[round_player]">
             {{content_text[cells[index]]}}
         </button>
     </div>
@@ -99,8 +100,8 @@
         methods: {
             play_step(index) {
                 // console.log(index);
-                this.cells[index]=this.round_player;
-                this.round_player=3-this.round_player;
+                this.cells[index] = this.round_player;
+                this.round_player = 3 - this.round_player;
             }
         }
     });
